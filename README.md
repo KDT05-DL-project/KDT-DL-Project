@@ -101,7 +101,7 @@
 
 ### 3. 데이터 선정
 
-![alt text](image-1.png)
+![alt text](./명노아/image/image-1.png)
 
 - 총 9종류의 물고기 폴더가 있고, 각 폴더당 1000개의 이미지 데이터가 있음
 - 각 이미지를 100X150, 49X59로 resize하여, feature의 개수를 줄임
@@ -147,7 +147,7 @@
 - 아래 형식과 같이 train 정확도와 valid 정확도,
 - 옵티마이저의 train 정확도 변화량
 - 옵티마이저의 valid 정확도 변화량으로 옵티마이저 측정
-  ![alt text](image-2.png)
+  ![alt text](./명노아/image/image-2.png)
 
 ### 6. 결과 및 분석
 
@@ -156,24 +156,24 @@
 - 학습 속도가 느리게 진행
 - 지그재그로 크게 변동
 
-![alt text](image-3.png)
+![alt text](./명노아/image/image-3.png)
 
 #### ADAGRAD(AdaGrad)
 
 - 크게 학습하다가 점차적으로 최적점에 가까워짐
 - 갱신의 정도가 큰 폭으로 작아지도록 조정
 
-![alt text](image-4.png)
+![alt text](./명노아/image/image-4.png)
 
 #### ADAM(Adaptive Moment Estimation)
 
 - 모멘텀과 AdaGrad를 융합한 방법
 - 모멘텀 방식보다 좌우 흔들림이 덜 하다
-  ![alt text](image-5.png)
+  ![alt text](./명노아/image/image-5.png)
 
 ### 7. 최종결론
 
-![alt text](image-6.png)
+![alt text](./명노아/image/image-6.png)
 
  </details>
 
