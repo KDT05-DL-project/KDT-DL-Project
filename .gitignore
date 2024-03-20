@@ -160,3 +160,5 @@ cython_debug/
 .idea/
 .vscode/
 DATA/Fish_Dataset
+DATA/
+service/fish_predict.py
