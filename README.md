@@ -1,4 +1,4 @@
-# _KDT05-Machine Learning Project_
+# _KDT05-Deep Learning Project_
 
 경북대학교 KDT(Korea Digital Training) 빅데이터 전문가 양성과정 5기 : DL(Deep Learning) 3팀입니다
 
@@ -65,13 +65,117 @@
 |        Readme | ✅     | ✅     | ✅     | ✅     |
 |   서비스 구현 | ✅     | ✅     |        | ✅     |
 
+###### 개발 공통 환경
+
+```
+- BATCH_SIZE = 50
+- LEARNING_RATE = DEFAULT
+- 최적화 함수 → ADAM
+- 활성화 함수 적용 시점 → 각 레이어마다
+- 가중치 초기화 → HE
+- TRAIN : VALIDATION : TEST = 90 : 9 : 1
+- 데이터로더    SHUFFLE = TRUE
+               DROP_LAST = TRUE
+```
+
 ### 소주제 개요(개인 항목)
 
 <details>
   <summary>
-    명노아
+    명노아(옵티마이저 최적화 분석)
   </summary>
-</details>
+
+### 1. 주제 선정 배경
+
+- 과적합 방지
+- 계산 효율성
+- 해석성
+
+-> 해당 요소를 모델에 미치는 요소로 알아보기 위해 주제 선정  
+-> 모델에 영향을 끼치는(옵티마이저, 퍼셉트론, 은닉층) 요소로 성능 탐색
+
+### 2. 데이터 선정 배경
+
+- 성능이 낮게 나오는 데이터 선정
+- MNIST_NUMBER는 성능이 높게 나오므로, Kaggle에서 제공하는 Scaled_FISH 데이터 사용
+
+### 3. 데이터 선정
+
+![alt text](./명노아/image/image-1.png)
+
+- 총 9종류의 물고기 폴더가 있고, 각 폴더당 1000개의 이미지 데이터가 있음
+- 각 이미지를 100X150, 49X59로 resize하여, feature의 개수를 줄임
+- np.concatenate로 이미지 데이터를 계속해서 stack함
+- npy 파일로 저장하기에는 용량이 커서, pkl(피클) 파일로 저장
+
+### 4. 데이터 분석 파이프라인
+
+    ```
+    1. feature는 float타입으로, target은 long타입으로 변환
+    2. 데이터셋 클래스 생성
+    3. 데이터셋 생성
+    4. 모델 클래스 생성
+    5. 모델 생성
+    6. 옵티마이저, 손실함수 정의
+    7. 데이터로더 생성
+    8. 스케줄러 생성&학습
+    9. 학습 진행
+    10. 평가
+    ```
+
+### 5. 진행한 모델 및 결과
+
+#### 사용한 모델
+
+| 모델 이름  | 모델 설명                                                                                                                                                      |
+| ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ADAM       | Adam은 경사 하강 최적화 알고리즘 중 하나로, 목적 함수에 대한 일차 및 이차 모멘트 추정치를 저장하여 각 매개 변수에 대한 각각의 학습 속도를 동적으로 조절합니다. |
+| ADADELTA   | Adadelta는 AdaGrad의 변형으로, 학습률을 조정하는 데 지난 그래디언트의 제곱을 누적하는 대신 일정한 시간 간격 내 제한된 메모리만 사용하여 학습률을 조정합니다.   |
+| ADAGRAD    | Adagrad는 각 매개 변수에 대해 학습률을 조정하는 경사 하강 최적화 알고리즘으로, 이전의 그래디언트 업데이트를 기억하여 학습률을 조절합니다.                      |
+| ADAMW      | AdamW는 Adam의 변형으로, 가중치 감쇠를 추가하여 가중치 업데이트의 안정성을 향상시키는 방법입니다.                                                              |
+| SPARSEADAM | SparseAdam은 Adam 최적화 알고리즘의 희소 버전으로, 희소 그래디언트 및 희소 가중치에 대해 최적화됩니다.                                                         |
+| ASGD       | 평균 확률적 경사 하강(ASGD)은 일정 시간 동안의 그래디언트 업데이트의 평균을 사용하여 경사 하강 최적화를 수행하는 방법입니다.                                   |
+| RADAM      | Rectified Adam(RAdam)은 Adam 최적화 알고리즘의 변형으로, 효과적인 학습률 조정을 통해 안정적인 학습을 돕는 방법입니다.                                          |
+| NADAM      | Nesterov Adam(Nadam)은 Adam 최적화 알고리즘의 변형으로, 네스테로프 모멘텀 최적화를 Adam에 통합하는 방법입니다.                                                 |
+| RMSPROP    | RMSProp은 AdaGrad의 변형으로, 지난 제곱된 그래디언트의 지수 가중 이동 평균을 사용하여 학습률을 조정하는 방법입니다.                                            |
+| RPROP      | Resilient Backpropagation(Rprop)은 그래디언트 부호에 따라 매개 변수 업데이트를 수행하여 경사 하강 최적화를 수행하는 방법입니다.                                |
+| GSD        | Gradient Sparsification and Densification(GSD)은 그래디언트의 희소성을 관리하여 효율적인 학습을 도와주는 방법입니다.                                           |
+
+#### 평가 기준
+
+- 동일 분류 개수의 데이터셋이므로, f1을 옵티마이저 측정 기준으로 설정
+- 아래 형식과 같이 train 정확도와 valid 정확도,
+- 옵티마이저의 train 정확도 변화량
+- 옵티마이저의 valid 정확도 변화량으로 옵티마이저 측정
+  ![alt text](./명노아/image/image-2.png)
+
+### 6. 결과 및 분석
+
+#### SGD(Stocahstic Gradient Descent)
+
+- 학습 속도가 느리게 진행
+- 지그재그로 크게 변동
+
+![alt text](./명노아/image/image-3.png)
+
+#### ADAGRAD(AdaGrad)
+
+- 크게 학습하다가 점차적으로 최적점에 가까워짐
+- 갱신의 정도가 큰 폭으로 작아지도록 조정
+
+![alt text](./명노아/image/image-4.png)
+
+#### ADAM(Adaptive Moment Estimation)
+
+- 모멘텀과 AdaGrad를 융합한 방법
+- 모멘텀 방식보다 좌우 흔들림이 덜 하다
+  ![alt text](./명노아/image/image-5.png)
+
+### 7. 최종결론
+
+![alt text](./명노아/image/image-6.png)
+
+ </details>
 
 </hr>
 
