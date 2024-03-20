@@ -82,14 +82,15 @@
 
 - 실험 1 : 히든 레이어 없는 상태로 퍼셉트론 수 변경
     
-    <aside>
-    ✏️ perceptron_num → 100
+    <div class="aside">
     
+    ✏️ perceptron_num → 100
+    ```
     Linear(in_features=2655, out_features=perceptron_num, bias=True)
     ReLU()
     Linear(in_features=perceptron_num, out_features=9, bias=True)
-    
-    </aside>
+    ```
+    </div>
     
     **결과**
     
@@ -99,9 +100,10 @@
     
 - 실험 2 : 히든 레이어 2개인 상태로 퍼셉트론 수 변경1
     
-    <aside>
+    <div class="aside">
     ✏️ perceptron_num → 100
-    
+      
+    ```
     Linear(in_features=2655, out_features=perceptron_num, bias=True)
     ReLU()
     Linear(in_features=perceptron_num, out_features=perceptron_num, bias=True)
@@ -109,8 +111,9 @@
     Linear(in_features=perceptron_num, out_features=perceptron_num, bias=True)
     ReLU()
     Linear(in_features=perceptron_num, out_features=9, bias=True)
+    ```
     
-    </aside>
+    </div>
     
     **결과**
     
@@ -125,7 +128,8 @@
     
     <aside>
     ✏️ perceptron_num → n1, n2, n3…
-    
+      
+    ```
     Linear(in_features=2655, out_features=n1, bias=True)
     ReLU()
     Linear(in_features=n1, out_features=n2, bias=True)
@@ -133,6 +137,7 @@
     Linear(in_features=n2, out_features=n3, bias=True)
     ReLU()
     Linear(in_features=n3, out_features=9, bias=True)
+    ```
     
     </aside>
     
